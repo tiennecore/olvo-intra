@@ -59,7 +59,7 @@ class DeliveriesController < ApplicationController
     searchclient=params[:findclient]
     searchadresse=params[:findadresse]
     searchdate=params[:finddate]
-    @deliveries= Delivery.where(validationcommande: false)
+    @deliveries= Delivery.where(validationcommande: false,validationlivraison:false)
     if (searchclient.present?)
       @deliveries = @deliveries.where("client LIKE ?","%#{params[:findclient]}%")
     end
@@ -190,7 +190,7 @@ class DeliveriesController < ApplicationController
     @delivery.validationlivraison=false
     respond_to do |format|
       if @delivery.save
-        format.html { redirect_to @delivery, notice: 'La livraison a été créée.' }
+        format.html { redirect_to deliveries_url, notice: 'La livraison a été créée.' }
         format.json { render :show, status: :created, location: @delivery }
       else
         format.html { render :new }
