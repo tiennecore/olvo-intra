@@ -1,0 +1,89 @@
+<div class="container" style="text-align:center;width:90%;">
+  <%= form_with(model: delivery, local: true) do |form| %>
+    <% if delivery.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(delivery.errors.count, "error") %> prohibited this delivery from being saved:</h2>
+
+        <ul>
+        <% delivery.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="form-group">
+      <div class="col-md-1 text_field">
+
+        <%= form.text_field :client, id: :delivery_client,class:"form-control ",style:"heigth:80px;",placeholder:"Client" %>
+      </div>
+
+      <div class="col-sm-1 field">
+
+        <%= form.text_field :nom, id: :delivery_nom,class:"form-control",style:"heigth:80px;",placeholder:"Nom" %>
+      </div>
+
+      <div class="col-sm-1 field">
+        <%= form.text_field :adressepickup, id: :delivery_adressepickup,class:"form-control",style:"heigth:80px;",placeholder:"adresse de pickup" %>
+      </div>
+
+      <div class="col-sm-2 field">
+        <%= form.text_field :adressedelivery, id: :delivery_adressedelivery,class:"form-control",style:"heigth:80px;",placeholder:"adresse de livraison" %>
+      </div>
+
+      <div class="col-sm-1 field">
+
+        <%= form.number_field :zipcode, id: :delivery_zipcode,class:"form-control",style:"heigth:80px;",placeholder:"zipcode" %>
+      </div>
+
+      <div class="col-sm-1 field">
+
+        <%= form.number_field :unité, id: :delivery_unité,class:"form-control",style:"heigth:80px;",placeholder:"unit" %>
+      </div>
+      <div class="col-sm-1 field">
+        <%= form.date_field :datelivraison, id: :delivery_datelivraison,class:"form-control",style:"width:148px;heigth:80px;" %>
+      </div>
+      <div class="col-sm-1 label">
+        <p style="color:black;margin-top:7px;">de : </p>
+      </div>
+      <div class="col-sm-1 field">
+        <%= form.time_field :heureentré, id: :delivery_heureentré,class:"form-control",style:"width:80px;heigth:80px;" %>
+      </div>
+      <div class="col-sm-1 label">
+        <p style="color:black;margin-top:7px;">à : </p>
+      </div>
+      <div class="col-sm-1 field">
+        <%= form.time_field :heuresortie, id: :delivery_heuresortie,class:"form-control",style:"width:80px;heigth:80px;" %>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-12 field">
+        <%= form.text_field :commentaire, id: :delivery_commentaire,class:"form-control",style:"width:40%;heigth:80px;",placeholder:"Commentaire" %>
+      </div>
+    </div><br>
+
+    <div class="row">
+      <div class="col-sm-12 actions">
+
+        <%= form.submit "delivery",class:"buttondelivery"%>
+      </div>
+
+
+
+
+
+
+
+    </div>
+  <% end %>
+  <br><h2 class="titre1">Importer des commandes par fichier csv</h2><br><br>
+  <div class="row">
+    <div class="custom-file" style="text-align:center;">
+      <%= form_tag import_deliveries_path, multipart: true do %>
+         <%= file_field_tag :file,type:"input",class:"custom-file-input" %>
+         <%= submit_tag "Upload Commandes" %>
+      <% end %>
+    </div>
+  </div>
+
+</div>

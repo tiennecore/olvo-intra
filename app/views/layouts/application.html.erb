@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gestionolvo</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <style>
+  body,
+  html {
+    background-color: #f2f2f2;
+    font-family: arial;
+    height: 100%;
+    font-size: 0.9em;
+  }
+  .container{
+    width: 85%;
+  }
+  a {
+    color: #404040;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  header img:first-child {
+    margin: 2em 0 0 2em;
+    width: 17%;
+    min-width: 180px;
+    max-width: 200px;
+  }
+  header img {
+    margin: 0 1em 0 0;
+    width: 7%;
+
+  }
+  ul {
+    color: #404040;
+    float: right;
+    padding-top: 25px;
+    margin-right: 20px;
+    display: block;
+    font-size: 1em;
+    text-transform: uppercase;
+  }
+
+  ul:hover li {
+    opacity: 1;
+  }
+  ul:hover li:nth-child(2) {
+    transition: opacity 0.7s;
+  }
+  ul:hover li:nth-child(3) {
+    transition: opacity 1.4s;
+  }
+  ul:hover li:nth-child(4) {
+    transition: opacity 2.1s;
+  }
+  ul:hover li:nth-child(5) {
+    transition: opacity 2.8;
+  }
+  ul li {
+    padding-right: 18px;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.4s;
+    margin-top: 5px;
+  }
+  ul li:first-child {
+    background-position: right;
+    background-size: 8px;
+    opacity: 1;
+    background-repeat: no-repeat;
+  }
+  ul li:hover {
+    animation: bounce 0.5s;
+  }
+  @keyframes bounce {
+    0%,
+    20%,
+    60%,
+    100% {
+      -webkit-transform: translatey(0);
+      transform: translatey(0);
+    }
+    40% {
+      -webkit-transform: translatey(-2px);
+      transform: translatey(-2px);
+    }
+    80% {
+      -webkit-transform: translatey(-1px);
+      transform: translatey(-1px);
+    }
+  }
+  #loginBlock {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 250px;
+  }
+  #login-block button {
+    margin-top: 1.8em;
+  }
+  .titre1{
+    text-align: center;
+  }
+  .titre2{
+    text-align: center;
+    margin-left: 150px;
+  }
+  .titre3 {
+    text-align: center;
+    font-size: 10em;
+    font-weight: bold;
+  }
+  .textcenter{
+    text-align: center;
+  }
+  .popup {
+    height: auto;
+    width: auto;
+    max-width: 200px;
+    text-align: left;
+    vertical-align:middle;
+    background-color: #e1e1e1 ;
+    z-index: 99;
+    color: black;
+    display: none;
+    padding-top: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 10px;
+    position: absolute;
+    border-style: groove;
+    border-radius: 15px 15px 15px 15px;
+  }
+  .buttondelivery{
+    width: 6%;
+    border-width: 1px;
+    border-color: #e8d7c5;
+    border-style: solid;
+    border-radius: 0.5em;
+    background-color: #fff600;
+    text-transform: uppercase;
+    text-align: 0;
+    padding: 1.1em 2em 1.1em 2em;
+    font-weight: bold;
+    color: #404040;
+    font-size: 0.8em;
+  }
+
+  </style>
+
+  <body>
+    <header>
+      <%= image_tag "logo.svg" %>
+        <ul>
+          <li><a>Menu</a></li>
+            <li><%= link_to 'New', new_delivery_path%></li>
+            <li><%= link_to'Waiting', deliveries_path %></li>
+            <li><%= link_to'In delivering', indexlivraison_deliveries_path %></li>
+            <li><%= link_to'History', indexhistorique_deliveries_path %></li>
+            <li><%= link_to'Day', indexday_deliveries_path %></li>
+            <li><%= link_to'Week', indexweek_deliveries_path %></li>
+        </ul>
+        <% if flash[:notice] %>
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= flash[:notice] %>
+          </div>
+        <% elsif flash[:error] %>
+          <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= flash[:error] %>
+          </div>
+        <% elsif flash[:alert] %>
+          <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= flash[:alert] %>
+          </div>
+        <% end %>
+
+    </header>
+    <%= yield %>
+  </body>
+</html>

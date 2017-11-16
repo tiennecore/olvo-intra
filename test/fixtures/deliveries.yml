@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  client: MyString
+  nom: MyString
+  adresseA: MyString
+  adresseB: MyString
+  zipcode: 1
+  unité: 1
+  prix: 1
+  datelivraison: 2017-11-08
+  heureentré: 2017-11-08 06:33:12
+  heuresortie: 2017-11-08 06:33:12
+  validationcommande: false
+  validationlivraison: false
+
+two:
+  client: MyString
+  nom: MyString
+  adresseA: MyString
+  adresseB: MyString
+  zipcode: 1
+  unité: 1
+  prix: 1
+  datelivraison: 2017-11-08
+  heureentré: 2017-11-08 06:33:12
+  heuresortie: 2017-11-08 06:33:12
+  validationcommande: false
+  validationlivraison: false

@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @delivery.client %>
+</p>
+
+<p>
+  <strong>Nom:</strong>
+  <%= @delivery.nom %>
+</p>
+
+<p>
+  <strong>Adressea:</strong>
+  <%= @delivery.adresseA %>
+</p>
+
+<p>
+  <strong>Adresseb:</strong>
+  <%= @delivery.adresseB %>
+</p>
+
+<p>
+  <strong>Zipcode:</strong>
+  <%= @delivery.zipcode %>
+</p>
+
+<p>
+  <strong>Unité:</strong>
+  <%= @delivery.unité %>
+</p>
+
+<p>
+  <strong>Prix:</strong>
+  <%= @delivery.prix %>
+</p>
+
+<p>
+  <strong>Datelivraison:</strong>
+  <%= @delivery.datelivraison %>
+</p>
+
+<p>
+  <strong>Heureentré:</strong>
+  <%= @delivery.heureentré %>
+</p>
+
+<p>
+  <strong>Heuresortie:</strong>
+  <%= @delivery.heuresortie %>
+</p>
+
+<p>
+  <strong>Validationcommande:</strong>
+  <%= @delivery.validationcommande %>
+</p>
+
+<p>
+  <strong>Validationlivraison:</strong>
+  <%= @delivery.validationlivraison %>
+</p>
+
+<%= link_to 'Edit', edit_delivery_path(@delivery) %> |
+<%= link_to 'Back', deliveries_path %>

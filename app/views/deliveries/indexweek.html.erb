@@ -1,0 +1,125 @@
+<script>
+
+</script>
+<div class="container">
+  <script>$(document).ready(function(){
+    $(".task-check").bind('change', function(){
+      if (this.checked){
+        $.ajax({
+          url: '/deliveries/'+this.value+'/toggle',
+          type: 'POST',
+          data: {"validationcommande": this.checked},
+          success: function(){
+            location.reload();
+          }
+        });
+      }
+      if (this.checked == false){
+        $.ajax({
+          url: '/deliveries/'+this.value+'/toggle',
+          type: 'POST',
+          data: {"validationcommande": false},
+          success: function(){
+            location.reload();
+          }
+        });
+      }
+    });
+    $(".task-check2").bind('change', function(){
+      if (this.checked){
+        $.ajax({
+          url: '/deliveries/'+this.value+'/toggle2',
+          type: 'POST',
+          data: {"validationlivraison": this.checked},
+          success: function(){
+            location.reload();
+          }
+        });
+      }
+      if (this.checked == false){
+        $.ajax({
+          url: '/deliveries/'+this.value+'/toggle2',
+          type: 'POST',
+          data: {"validationlivraison": false},
+          success: function(){
+            location.reload();
+          }
+        });
+      }
+    });
+  });
+  </script>
+  <h1 class="titre1">Commandes en livraison</h1>
+  <br>
+  <div style="text-align:center;">
+    <%= form_tag deliveries_path,:method => 'get' do %>
+      <%= text_field_tag (:findclient), params[:findclient],placeholder:'Client'%>
+      <%= text_field_tag (:findadresse), params[:findadresse],placeholder:'Adresse'%>
+      <%= date_field_tag (:finddate), params[:finddate],placeholder:'Date'%>
+      <%= submit_tag "rechercher",class:"btn btn-small btn-primary"%>
+      <%= link_to "CSV", deliveries_path(format: "csv") %>
+    <% end %>
+  </div>
+  <% @listDate.each do |date| %>
+    <h2><%= date.strftime("%d/%m/%Y") %> </h2>
+    <div class="media">
+      <div class="media-body">
+        <table class="table table-hover ">
+          <thead>
+            <tr>
+              <th class="textcenter">Client</th>
+              <th class="textcenter" >Nom</th>
+              <th class="textcenter" >pickup</th>
+              <th class="textcenter" >delivery</th>
+              <th class="textcenter" >Zipcode</th>
+              <th class="textcenter" >Unité</th>
+              <th class="textcenter" >Heure entré</th>
+              <th class="textcenter" >Heure sortie</th>
+              <th class="textcenter" >Commentaire</th>
+              <th class="textcenter">attente\livraison</th>
+              <th class="textcenter">livraison\livrer</th>
+              <th class="textcenter"  colspan="3"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @deliveries.each do |delivery| %>
+              <% if (delivery.datelivraison.strftime("%d/%m/%Y") == date.strftime("%d/%m/%Y")) %>
+                <tr id='<%=delivery.id%>'class="textcenter">
+                  <td style="font-size:1.3em;"><%= delivery.client %></td>
+                  <td><%= delivery.nom %></td>
+                  <td><%= delivery.adressepickup %></td>
+                  <td><%= delivery.adressedelivery %></td>
+                  <td><%= delivery.zipcode %></td>
+                  <td><%= delivery.unité %></td>
+                  <td><%= delivery.heureentré.strftime("%Hh%M") %></td>
+                  <td><%= delivery.heuresortie.strftime("%Hh%M") %></td>
+                  <td>
+                    <% if delivery.commentaire? %>
+
+                    <div class='user'><span class="glyphicon glyphicon-eye-open"></span>
+                      <div class='popup'><%= delivery.commentaire %></div>
+                    </div>
+                    <% end %>
+                  </td>
+                  <td>
+                    <div class="task-wrapper">
+                      <%= check_box_tag 'completed', delivery.id , delivery.validationcommande, :class => "task-check" %>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="task-wrapper">
+                      <%= check_box_tag 'completed', delivery.id , delivery.validationlivraison, :class => "task-check2" %>
+                    </div>
+                  </td>
+                  <td><%= link_to '', edit_delivery_path(delivery), class:'glyphicon glyphicon-edit' %></td>
+                  <td class='destroy'><span class='glyphicon glyphicon-remove'></span></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <%end%>
+</div>
