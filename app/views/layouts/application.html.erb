@@ -7,8 +7,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">s
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
@@ -28,7 +27,11 @@
     text-decoration: none;
     font-weight: bold;
   }
-
+  a:hover{
+    color:#404040;
+    text-decoration: none;
+    background-color: yellow;
+  }
   header img:first-child {
     margin: 2em 0 0 2em;
     width: 17%;
@@ -154,11 +157,157 @@
     font-weight: bold;
     color: #404040;
     font-size: 0.8em;
+    min-width: 100px;
+  }
+  .fieldform{
+    border-width: 1px;
+    border-color: #e8d7c5;
+    border-style: solid;
+    color: #404040;
+    box-sizing: border-box;
+    padding: 1em 1.5em 1em 1.5em;
+    font-size: 0.8em;
+    margin-top: 0.3em;
+    border-radius: 0.5em;
+    -webkit-appearance: textfield;
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    cursor: auto;
+
+  }
+  .btn-file {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-file input[type=file] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 100%;
+      min-height: 100%;
+      font-size: 100px;
+      text-align: right;
+      filter: alpha(opacity=0);
+      opacity: 0;
+      outline: none;
+      background: white;
+      cursor: inherit;
+      display: block;
   }
 
   </style>
 
+
   <body>
+    <script>
+    $(document).ready(function(){
+      $(".task-check").bind('change', function(){
+        var valueid=this.value;
+        if (this.checked){
+          $.ajax({
+            url: '/deliveries/'+this.value+'/toggle',
+            type: 'POST',
+            data: {"validationcommande": this.checked},
+            success: function(){
+              $("tr#"+valueid).remove();
+            }
+          });
+        }
+        if (this.checked == false){
+          $.ajax({
+            url: '/deliveries/'+this.value+'/toggle',
+            type: 'POST',
+            data: {"validationcommande": false},
+            success: function(){
+              $("tr#"+valueid).remove();
+            }
+          });
+        }
+      });
+      $(".task-check2").bind('change', function(){
+        var valueid=this.value;
+        if (this.checked){
+          $.ajax({
+            url: '/deliveries/'+this.value+'/toggle2',
+            type: 'POST',
+            data: {"validationlivraison": this.checked},
+            success: function(){
+              $("tr#"+valueid).remove();
+            }
+          });
+        }
+        if (this.checked == false){
+          $.ajax({
+            url: '/deliveries/'+this.value+'/toggle2',
+            type: 'POST',
+            data: {"validationlivraison": false},
+            success: function(){
+              $("tr#"+valueid).remove();
+            }
+          });
+        }
+      });
+      $(".task-check3").bind('change', function(){
+        if (this.checked){
+          $.ajax({
+            url: '/deliveries/'+this.value+'/toggle',
+            type: 'POST',
+            data: {"validationcommande": this.checked}
+          });
+        }
+        if (this.checked == false){
+          $.ajax({
+            url: '/deliveries/'+this.value+'/toggle',
+            type: 'POST',
+            data: {"validationcommande": false}
+          });
+        }
+      });
+      $(".task-check4").bind('change', function(){
+        if (this.checked){
+          $.ajax({
+            url: '/deliveries/'+this.value+'/toggle2',
+            type: 'POST',
+            data: {"validationlivraison": this.checked},
+            success: function(){
+            }
+          });
+        }
+        if (this.checked == false){
+          $.ajax({
+            url: '/deliveries/'+this.value+'/toggle2',
+            type: 'POST',
+            data: {"validationlivraison": false},
+            success: function(){
+            }
+          });
+        }
+      });
+      $('.user').hover(function() {
+        $(this).find('.popup').show();
+          }, function() {
+            $(this).find('.popup').hide();
+          });
+      $('.destroy').on('click', function(){
+          $.ajax({
+            url: '/commands/' + this.parentElement.id,
+            type: 'DELETE',
+            success: function(){
+
+            }
+          });
+
+      });
+    });
+    function copyToClipboard(element) {
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val($(element).text()).select();
+      document.execCommand("copy");
+      $temp.remove();
+    }
+    </script>
     <header>
       <%= image_tag "logo.svg" %>
         <ul>

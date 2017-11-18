@@ -1,61 +1,13 @@
-<script>
 
-</script>
 <div class="container">
-  <script>$(document).ready(function(){
-    $(".task-check").bind('change', function(){
-      if (this.checked){
-        $.ajax({
-          url: '/deliveries/'+this.value+'/toggle',
-          type: 'POST',
-          data: {"validationcommande": this.checked},
-          success: function(){
-            location.reload();
-          }
-        });
-      }
-      if (this.checked == false){
-        $.ajax({
-          url: '/deliveries/'+this.value+'/toggle',
-          type: 'POST',
-          data: {"validationcommande": false},
-          success: function(){
-            location.reload();
-          }
-        });
-      }
-    });
-    $(".task-check2").bind('change', function(){
-      if (this.checked){
-        $.ajax({
-          url: '/deliveries/'+this.value+'/toggle2',
-          type: 'POST',
-          data: {"validationlivraison": this.checked},
-          success: function(){
-            location.reload();
-          }
-        });
-      }
-      if (this.checked == false){
-        $.ajax({
-          url: '/deliveries/'+this.value+'/toggle2',
-          type: 'POST',
-          data: {"validationlivraison": false},
-          success: function(){
-            location.reload();
-          }
-        });
-      }
-    });
-  });
-  </script>
-  <h1 class="titre1">Commandes en livraison</h1>
+
+  <h1 class="titre1">Commandes de la semaine</h1>
   <br>
   <div style="text-align:center;">
     <%= form_tag deliveries_path,:method => 'get' do %>
-      <%= text_field_tag (:findclient), params[:findclient],placeholder:'Client'%>
-      <%= text_field_tag (:findadresse), params[:findadresse],placeholder:'Adresse'%>
-      <%= date_field_tag (:finddate), params[:finddate],placeholder:'Date'%>
+      <%= text_field_tag (:findclient), params[:findclient],class:"fieldform",placeholder:'Client'%>
+      <%= text_field_tag (:findadresse), params[:findadresse],class:"fieldform",placeholder:'Adresse'%>
+      <%= date_field_tag (:finddate), params[:finddate],class:"fieldform",placeholder:'Date'%>
       <%= submit_tag "rechercher",class:"btn btn-small btn-primary"%>
       <%= link_to "CSV", deliveries_path(format: "csv") %>
     <% end %>
@@ -69,11 +21,10 @@
             <tr>
               <th class="textcenter">Client</th>
               <th class="textcenter" >Nom</th>
-              <th class="textcenter" >pickup</th>
-              <th class="textcenter" >delivery</th>
+              <th class="textcenter" >adresse</th>
               <th class="textcenter" >Zipcode</th>
               <th class="textcenter" >Unité</th>
-              <th class="textcenter" >Heure entré</th>
+              <th class="textcenter" >Heure entrée</th>
               <th class="textcenter" >Heure sortie</th>
               <th class="textcenter" >Commentaire</th>
               <th class="textcenter">attente\livraison</th>
@@ -86,10 +37,15 @@
             <% @deliveries.each do |delivery| %>
               <% if (delivery.datelivraison.strftime("%d/%m/%Y") == date.strftime("%d/%m/%Y")) %>
                 <tr id='<%=delivery.id%>'class="textcenter">
-                  <td style="font-size:1.3em;"><%= delivery.client %></td>
-                  <td><%= delivery.nom %></td>
-                  <td><%= delivery.adressepickup %></td>
-                  <td><%= delivery.adressedelivery %></td>
+                  <td style="font-size:1.15em;font-weight: bold;width:160px;text-transform: uppercase;"><%= delivery.client %></td>
+                  <td style="width:220px; "><%= delivery.nom %></td>
+                  <td style="width:400px; ">
+                    <% if delivery.adressepickup?%>
+                      <p><%=delivery.adressepickup%> => <%=delivery.adressedelivery%></p>
+                    <%else%>
+                      <%=delivery.adressedelivery%>
+                    <%end%>
+                  </td>
                   <td><%= delivery.zipcode %></td>
                   <td><%= delivery.unité %></td>
                   <td><%= delivery.heureentré.strftime("%Hh%M") %></td>
@@ -104,16 +60,17 @@
                   </td>
                   <td>
                     <div class="task-wrapper">
-                      <%= check_box_tag 'completed', delivery.id , delivery.validationcommande, :class => "task-check" %>
+                      <%= check_box_tag 'completed', delivery.id , delivery.validationcommande, :class => "task-check3" %>
                     </div>
                   </td>
                   <td>
                     <div class="task-wrapper">
-                      <%= check_box_tag 'completed', delivery.id , delivery.validationlivraison, :class => "task-check2" %>
+                      <%= check_box_tag 'completed', delivery.id , delivery.validationlivraison, :class => "task-check4" %>
                     </div>
                   </td>
                   <td><%= link_to '', edit_delivery_path(delivery), class:'glyphicon glyphicon-edit' %></td>
-                  <td class='destroy'><span class='glyphicon glyphicon-remove'></span></td>
+                  <td class='destroy'><a class='glyphicon glyphicon-remove'></a></td>
+                  <td ><a onclick="copyToClipboard('tr#'+<%=delivery.id%>)" class="glyphicon glyphicon-duplicate"></a></td>
                 </tr>
               <% end %>
             <% end %>

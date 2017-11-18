@@ -1,7 +1,12 @@
 class Delivery < ApplicationRecord
-
+  validates :client, presence: true
+  validates :nom,presence:true
+  validates :adressedelivery,presence:true
+  validates :zipcode,presence:true
+  validates :unité,presence:true
+  validates :datelivraison,presence:true
   def self.to_csv(options = {})
-    desired=["client","nom","adresseA","adresseB","zipcode","unité","prix","datelivraison","heureentré","heuresortie"]
+    desired=["client","nom","adressepickup","adressedelivery","zipcode","unité","prix","datelivraison","heureentré","heuresortie","commentaire"]
     CSV.generate(options) do |csv|
       csv << desired
       all.each do |command|
@@ -12,8 +17,11 @@ class Delivery < ApplicationRecord
 
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
-      @deliveries = Delivery.create(:client => row[0],:nom => row[1],:adressepickup => row[2],:adressedelivery => row[3],:zipcode => row[4],:unité => row[5],:prix => row[6],:datelivraison => row[7],:heureentré => row[8],:heuresortie => row[9],
-        :commentaire => row[10])
+      @delivery = Delivery.create(:client => row[0],:nom => row[1],:adressepickup => row[2],:adressedelivery => row[3],:zipcode => row[4],:unité => row[5],:datelivraison => row[6],:heureentré => row[7],:heuresortie => row[8],
+        :commentaire => row[9])
+      @delivery.validationcommande=false
+      @delivery.validationlivraison=false
+      @delivery.save
 
     end
   end

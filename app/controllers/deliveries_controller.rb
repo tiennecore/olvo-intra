@@ -100,7 +100,7 @@ class DeliveriesController < ApplicationController
   end
 
   def indexday
-    @deliveries= Delivery.where(validationcommande: true,validationlivraison: false,datelivraison: Date.today)
+    @deliveries= Delivery.where(datelivraison: Date.today)
     searchclient=params[:findclient]
     searchadresse=params[:findadresse]
     if (searchclient.present?)
@@ -120,7 +120,7 @@ class DeliveriesController < ApplicationController
   def indexweek
     dateB=Date.today.beginning_of_week(:monday)
     dateE=Date.today.end_of_week(:monday)
-    @deliveries= Delivery.where(validationcommande: true,validationlivraison: false,datelivraison: dateB..dateE)
+    @deliveries= Delivery.where(datelivraison: dateB..dateE)
     searchclient=params[:findclient]
     searchadresse=params[:findadresse]
 
@@ -188,6 +188,14 @@ class DeliveriesController < ApplicationController
     @delivery = Delivery.new(delivery_params)
     @delivery.validationcommande=false
     @delivery.validationlivraison=false
+    if !@delivery.heureentré.present?
+      date=DateTime.now.change(hour:10,min:0)
+      @delivery.heureentré= date
+    end
+    if !@delivery.heuresortie.present?
+      date=DateTime.now.change(hour:20,min:0)
+      @delivery.heuresortie=date
+    end
     respond_to do |format|
       if @delivery.save
         format.html { redirect_to deliveries_url, notice: 'La livraison a été créée.' }

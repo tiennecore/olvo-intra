@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :deliveries do
     member do
       post 'toggle'
-      post 'toogle2'
+      post 'toggle2'
     end
     collection do
       post :import
