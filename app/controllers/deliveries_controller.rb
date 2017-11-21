@@ -1,4 +1,5 @@
 class DeliveriesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_delivery, only: [:show, :edit, :update, :destroy]
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 

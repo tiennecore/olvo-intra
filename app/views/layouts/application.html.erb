@@ -310,6 +310,7 @@
     </script>
     <header>
       <%= image_tag "logo.svg" %>
+      <% if user_signed_in? %>
         <ul>
           <li><a>Menu</a></li>
             <li><%= link_to 'New', new_delivery_path%></li>
@@ -318,25 +319,78 @@
             <li><%= link_to'History', indexhistorique_deliveries_path %></li>
             <li><%= link_to'Day', indexday_deliveries_path %></li>
             <li><%= link_to'Week', indexweek_deliveries_path %></li>
+            <li><%= link_to'admin', rails_admin_path %></li>
         </ul>
         <% if flash[:notice] %>
           <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <button type="button" class="close" data-dismiss="alert" style="text-align:center;">&times;</button>
             <%= flash[:notice] %>
           </div>
         <% elsif flash[:error] %>
           <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <button type="button" class="close" data-dismiss="alert" style="text-align:center;">&times;</button>
             <%= flash[:error] %>
           </div>
         <% elsif flash[:alert] %>
           <div class="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <button type="button" class="close" data-dismiss="alert" style="text-align:center;">&times;</button>
             <%= flash[:alert] %>
           </div>
         <% end %>
-
+      <% end %>
     </header>
-    <%= yield %>
+    <% if user_signed_in?%>
+      <%= yield %>
+    <% else %>
+      <div id="loginBlock">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div style="text-align:center;">
+            <label for="login">Login</label>
+          </div>
+          <div class="field"><br />
+            <%= f.email_field :email,placeholder: "email", autofocus: true, class: "form-control"  %>
+          </div>
+
+          <div class="field"><br>
+            <%= f.password_field :password,placeholder:"mot de passe", autocomplete: "off", class: "form-control"  %>
+          </div>
+          <br>
+          <% if devise_mapping.rememberable? -%>
+            <div class="field">
+              <%= f.check_box :remember_me %>
+              <label>  se rappeler de moi</label>
+            </div>
+          <% end %><br>
+          <div class="buttonConexion" style="text-align:center;">
+            <%= f.submit "Connexion", class:'btn btn-warning btn-sm' %>
+          </div>
+        <% end %>
+      </div>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %>
+
+        <div class="field">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password %>
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+          <%= f.password_field :password, autocomplete: "off" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password_confirmation %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "off" %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Sign up" %>
+        </div>
+      <% end %>
+    <%end%>
   </body>
 </html>

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  devise_for :users
   resources :deliveries do
     member do
       post 'toggle'
@@ -10,6 +13,7 @@ Rails.application.routes.draw do
       get :indexday
       get :indexweek
       get :indexhistorique
+      get :edit_password
     end
   end
   root 'deliveries#index'
