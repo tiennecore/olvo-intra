@@ -323,17 +323,17 @@
         </ul>
         <% if flash[:notice] %>
           <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert" style="text-align:center;">&times;</button>
+            <button type="button" class="close" data-dismiss="alert" style="left: 50%;">&times;</button>
             <%= flash[:notice] %>
           </div>
         <% elsif flash[:error] %>
           <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert" style="text-align:center;">&times;</button>
+            <button type="button" class="close" data-dismiss="alert" style="left: 50%;">&times;</button>
             <%= flash[:error] %>
           </div>
         <% elsif flash[:alert] %>
           <div class="alert">
-            <button type="button" class="close" data-dismiss="alert" style="text-align:center;">&times;</button>
+            <button type="button" class="close" data-dismiss="alert" style="left: 50%;">&times;</button>
             <%= flash[:alert] %>
           </div>
         <% end %>
@@ -366,31 +366,6 @@
           </div>
         <% end %>
       </div>
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= devise_error_messages! %>
-
-        <div class="field">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password %>
-          <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> characters minimum)</em>
-          <% end %><br />
-          <%= f.password_field :password, autocomplete: "off" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password_confirmation %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "off" %>
-        </div>
-
-        <div class="actions">
-          <%= f.submit "Sign up" %>
-        </div>
-      <% end %>
     <%end%>
   </body>
 </html>
