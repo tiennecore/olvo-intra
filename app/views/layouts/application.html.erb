@@ -320,6 +320,7 @@
             <li><%= link_to'Day', indexday_deliveries_path %></li>
             <li><%= link_to'Week', indexweek_deliveries_path %></li>
             <li><%= link_to'admin', rails_admin_path %></li>
+            <li><%= link_to('Logout', destroy_user_session_path, method: :delete) %></li>
         </ul>
         <% if flash[:notice] %>
           <div class="alert alert-success">
