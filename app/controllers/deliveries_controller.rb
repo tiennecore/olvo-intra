@@ -166,7 +166,9 @@ class DeliveriesController < ApplicationController
 
   def import
     Delivery.import(params[:file])
-    redirect_to deliveries_url, notice: 'Les commandes ont été créé.'
+    respond_to do |format|
+      format.html { redirect_to deliveries_url, notice: 'Les livraisons ont été créées.' }
+    end
   end
 
   # GET /deliveries/1
@@ -176,7 +178,12 @@ class DeliveriesController < ApplicationController
 
   # GET /deliveries/new
   def new
+    @deliveries=Delivery.where(validationcommande: nil)
     @delivery = Delivery.new
+    respond_to do |format|
+      format.html
+      format.csv { send_data @deliveries.to_csv }
+    end
   end
 
   # GET /deliveries/1/edit
@@ -240,6 +247,6 @@ class DeliveriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def delivery_params
-      params.require(:delivery).permit(:client, :nom, :adressedelivery, :adressepickup, :zipcode, :unité, :prix, :datelivraison, :heureentré, :heuresortie, :validationcommande, :validationlivraison, :commentaire)
+      params.require(:delivery).permit(:client, :nom, :adressedelivery, :adressepickup, :unité, :datelivraison, :heureentré, :heuresortie, :validationcommande, :validationlivraison, :commentaire)
     end
 end

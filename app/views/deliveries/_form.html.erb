@@ -7,12 +7,11 @@
     <%= form.text_field :nom, id: :delivery_nom,required: true,class:"fieldform",style:"width:100px;",placeholder:"Nom" %>
     <%= form.text_field :adressepickup, id: :delivery_adressepickup,class:"fieldform",style:"width:150px;",placeholder:"adresse de pickup" %>
     <%= form.text_field :adressedelivery, id: :delivery_adressedelivery,required: true,class:"fieldform",style:"width:150px;",placeholder:"adresse de livraison" %>
-    <% if delivery.zipcode?%>
-    <%= form.number_field :zipcode, id: :delivery_zipcode, min: 1000,required: true,class:"fieldform",style:"width:100px;",placeholder:"zipcode" %>
+    <% if delivery.unité?%>
+      <%= form.number_field :unité, id: :delivery_unité,required: true, min: 1,class:"fieldform",style:"width:80px;",placeholder:"unit" %>
     <%else%>
-    <%= form.number_field :zipcode, id: :delivery_zipcode, min: 1000,required: true,value:75001,class:"fieldform",style:"width:100px;",placeholder:"zipcode" %>
+      <%= form.number_field :unité, id: :delivery_unité,required: true, min: 1,placeholder: 1,class:"fieldform",style:"width:80px;",placeholder:"unit" %>
     <% end %>
-    <%= form.number_field :unité, id: :delivery_unité,required: true, min: 1,class:"fieldform",style:"width:80px;",placeholder:"unit" %>
     <% if delivery.datelivraison?%>
       <%= form.date_field :datelivraison, id: :delivery_datelivraison,required: true,class:"fieldform",style:"width:130px;margin-right:4px;" %>
     <%else%>
@@ -34,11 +33,12 @@
   <% end %>
   <br><h2 class="titre1">Importer des commandes par fichier csv</h2><br><br>
       <%= form_tag import_deliveries_path, multipart: true do %>
-      <span class="btn btn-large btn-primary btn-file">
-         Choose File
-         <%= file_field_tag :file %>
-      </span>
+        <span class="btn btn-large btn-primary btn-file">
+           Choose File
+           <%= file_field_tag :file %>
+        </span>
          <%= submit_tag "Upload Deliveries",class: "buttondelivery",style: "width:150px" %>
       <% end %>
+      <br><%= link_to "exemple", new_delivery_path(format: "csv") %>
 
 </div>

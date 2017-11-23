@@ -17,15 +17,13 @@ ActiveRecord::Schema.define(version: 20171121224846) do
     t.string "nom"
     t.string "adressedelivery"
     t.string "adressepickup"
-    t.integer "zipcode"
     t.integer "unité"
-    t.integer "prix"
     t.date "datelivraison"
     t.time "heureentré"
     t.time "heuresortie"
     t.boolean "validationcommande"
     t.boolean "validationlivraison"
-    t.string "commentaire"
+    t.text "commentaire"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
