@@ -165,9 +165,13 @@ class DeliveriesController < ApplicationController
   end
 
   def import
-    Delivery.import(params[:file])
+
     respond_to do |format|
-      format.html { redirect_to deliveries_url, notice: 'Les livraisons ont été créées.' }
+      if (Delivery.import(params[:file]) == 1)
+        format.html { redirect_to deliveries_url, notice: 'Les livraisons ont été créées.' }
+      else
+        format.html { redirect_to new_delivery_path , notice: 'il y a une erreur dans votre csv'}
+      end
     end
   end
 

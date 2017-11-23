@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Gestionolvo</title>
+    <title>B2B OLVO</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -291,7 +291,7 @@
           });
       $('.destroy').on('click', function(){
           $.ajax({
-            url: '/commands/' + this.parentElement.id,
+            url: '/deliveries/' + this.parentElement.id,
             type: 'DELETE',
             success: function(){
 
