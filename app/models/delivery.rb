@@ -15,7 +15,6 @@ class Delivery < ApplicationRecord
 
   def self.import(file)
     @listdeliveries=[]
-    @importvalid=1
     if(file.present?)
       CSV.foreach(file.path, headers: true) do |row|
         @delivery = Delivery.new(:client => row[0],:nom => row[1],:adressepickup => row[2],:adressedelivery => row[3],:unité => row[4],:datelivraison => row[5],:heureentré => row[6],:heuresortie => row[7],
@@ -26,29 +25,26 @@ class Delivery < ApplicationRecord
           @delivery.unité=1
         end
         if !@delivery.heureentré.present?
-          date=DateTime.now.change(hour:10,min:0)
+          date=DateTime.now.change(hour:9,min:0)
           @delivery.heureentré= date
         end
         if !@delivery.heuresortie.present?
-          date=DateTime.now.change(hour:20,min:0)
+          date=DateTime.now.change(hour:19,min:0)
           @delivery.heuresortie=date
         end
         @listdeliveries.push(@delivery)
       end
       @listdeliveries.each do |v|
         if !v.client.present? || !v.nom.present? || !v.adressedelivery.present? || !v.datelivraison.present?
-          @importvalid=0
-          break
+          return 0
         end
       end
-      if @importvalid == 1
-        @listdeliveries.each do |s|
-          s.save
-        end
+      @listdeliveries.each do |s|
+        s.save
       end
     end
   else
-    @importvalid=0
+    return 0
   end
-  return @importvalid
+  return 1
 end
