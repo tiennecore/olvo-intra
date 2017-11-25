@@ -32,6 +32,8 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'devise'
 gem 'jquery-rails'
 
+gem 'grape'
+
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
 # Use Capistrano for deployment

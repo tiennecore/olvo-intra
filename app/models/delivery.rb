@@ -21,15 +21,15 @@ class Delivery < ApplicationRecord
           :commentaire => row[8])
         @delivery.validationcommande=false
         @delivery.validationlivraison=false
-        if !@delivery.unité.present?
+        if !@delivery.unité.present? || @delivery.unité < 1
           @delivery.unité=1
         end
         if !@delivery.heureentré.present?
-          date=DateTime.now.change(hour:9,min:0)
+          date=DateTime.now.change(hour:10,min:0)
           @delivery.heureentré= date
         end
         if !@delivery.heuresortie.present?
-          date=DateTime.now.change(hour:19,min:0)
+          date=DateTime.now.change(hour:20,min:0)
           @delivery.heuresortie=date
         end
         @listdeliveries.push(@delivery)
