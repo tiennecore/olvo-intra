@@ -45,6 +45,7 @@ module Request
         command.validationcommande=false
         command.validationlivraison=false
         if !command.heureentré.present?
+          
           date=DateTime.now.change(hour:10,min:0)
           command.heureentré= date
         end
