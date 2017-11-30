@@ -1,8 +1,0 @@
-HTTP/1.1 400 Bad Request
-Content-Type: application/json
-Cache-Control: no-cache
-X-Request-Id: 2b21a008-7e1c-4538-b165-036db7312faf
-X-Runtime: 0.046446
-Content-Length: 197
-
-{"error":"\nProblem:\n  message body does not match declared format\nResolution:\n  when specifying application/json as content-type, you must pass valid application/json in the request's 'body' "}
